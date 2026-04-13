@@ -1,7 +1,3 @@
-# Character: mother class
-# Hero: user-controlled
-#enemy: user adversary
-
 class Character:
     def __init__(self, name, life, level):
         self.__name = name
@@ -42,10 +38,27 @@ class Enemy(Character):
         return self.__enemy_type
     
     def display_details(self):
-        return f"{super().display_details()}\nTipo: {self.get_type()}"
+        return f"{super().display_details()}\nTipo: {self.get_type()}\n"
     
 
-heroi = Hero(name="Leozão", life=100, level=5, ability="Super Força")
-print(heroi.display_details())
-enemy = Enemy(name="Morcego", life=50, level=3, enemy_type="Voador")
-print(enemy.display_details())
+class Game:
+    """ Game orchestrator class """
+    def __init__(self):
+        self.hero = Hero(name="Herói", life=100, level=5, ability="Super Força")
+        self.enemy = Enemy(name="Morcego", life=50, level=3, enemy_type="Voador")
+
+    def combat_init(self):
+        """ Manage the battle in turns """
+        print("----- Iniciando batalha -----")
+        while self.hero.get_life() > 0 and self.enemy.get_life() > 0:
+            print("\nDetalhes dos Personagens: ")
+            print(self.hero.display_details())
+            print(self.enemy.display_details())
+
+            input("Pressione Enter para atacar...")
+            choice = input("Escolha: 1 - Ataque Normal | 2 - Ataque Especial: ")
+
+
+# Create instance of game and combat init
+game = Game()
+game.combat_init()
