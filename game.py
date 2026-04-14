@@ -38,6 +38,11 @@ class Hero(Character):
     def display_details(self):
         return f"{super().display_details()}\nHabilidade: {self.get_ability()}\n"
     
+    def special_attack(self, target):
+        damage = self.get_level() * 5 # Increased damage
+        target.receive_attack(damage)
+        print(f"{self.get_name()} usou a habilidade especial '{self.get_ability()}' em {target.get_name()} e causou {damage} de dano!")
+    
 
 class Enemy(Character):
     def __init__(self, name, life, level, enemy_type):
@@ -55,7 +60,7 @@ class Game:
     """ Game orchestrator class """
     def __init__(self):
         self.hero = Hero(name="Herói", life=100, level=5, ability="Super Força")
-        self.enemy = Enemy(name="Morcego", life=50, level=3, enemy_type="Voador")
+        self.enemy = Enemy(name="Morcego", life=80, level=5, enemy_type="Voador")
 
     def combat_init(self):
         """ Manage the battle in turns """
@@ -70,8 +75,14 @@ class Game:
 
             if choice == "1":
                 self.hero.attack(self.enemy)
+            elif choice == "2":
+                self.hero.special_attack(self.enemy)
             else:
                 print("Escolha inválida. Escola novamente!")
+
+            if self.enemy.get_life() > 0:
+                # Enemy attack hero
+                self.enemy.attack(self.hero)
 
         if self.hero.get_life() > 0:
             print("\nParabéns, você venceu a batalha!")
