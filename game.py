@@ -80,7 +80,7 @@ class Game:
             elif choice == "2":
                 self.hero.special_attack(self.enemy)
             else:
-                print("Escolha inválida. Escola novamente!")
+                print("Escolha inválida!")
 
             if self.enemy.get_life() > 0:
                 # Enemy attack hero
